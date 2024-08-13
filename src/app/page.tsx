@@ -1,112 +1,181 @@
+"use client";
+
+import { Badge } from "@nextui-org/badge";
+import { Button } from "@nextui-org/button";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
+import { Input } from "@nextui-org/input";
+import { MagnifyingGlass, ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Home() {
+  const isLogin = false;
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      console.log("Search");
+    }
+  };
+
+  const getProducts = async () => {
+    const response = await fetch("https://shopping-laravel.test/api/products");
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
+    <main className="flex flex-col items-center bg-slate-100 min-h-screen">
+      <div className="flex bg-white p-4 border-b-2 border-b-slate-100 w-full">
+        <div className="flex justify-between items-center gap-10 m-auto w-full max-w-7xl">
+          <Link href={"/"}>
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+              src="/images/logo.svg"
+              alt="Logo"
+              width={0}
+              height={0}
+              className="w-auto h-6"
             />
-          </a>
+          </Link>
+          <Input
+            placeholder="Cari produk"
+            label=""
+            variant="bordered"
+            startContent={
+              <MagnifyingGlass
+                weight="bold"
+                size={16}
+                className="text-neutral-400"
+              />
+            }
+            onKeyDown={handleSearch}
+          />
+          {isLogin ? (
+            <div className="flex gap-4">
+              <Badge content="8" shape="circle" color="danger">
+                <Button isIconOnly variant="light" radius="full">
+                  <ShoppingCart size={24} />
+                </Button>
+              </Badge>
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button variant="light">Burhan Yuswantyo</Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Static Actions">
+                  <DropdownItem>Pesanan Saya</DropdownItem>
+                  <DropdownItem className="text-danger" color="danger">
+                    Keluar
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <Button as={Link} href={"/login"} variant="bordered">
+                Masuk
+              </Button>
+              <Button as={Link} href={"/register"} color="primary">
+                Daftar
+              </Button>
+            </div>
+          )}
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className="flex justify-center bg-white p-4 w-full">
+        <div className="flex gap-8 max-w-7xl">
+          <Link href={"#"}>Category 1</Link>
+          <Link href={"#"}>Category 2</Link>
+          <Link href={"#"}>Category 3</Link>
+          <Link href={"#"}>Category 4</Link>
+        </div>
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="flex flex-col items-center gap-6 py-8 w-full max-w-7xl">
+        <div className="flex flex-col items-center gap-2">
+          <h1 className="font-bold text-3xl">Welcome to Shopping</h1>
+          <p className="text-lg">The best place to shop online</p>
+        </div>
+        <div className="flex flex-col gap-2 w-full">
+          <h3 className="font-bold text-2xl text-neutral-700">
+            Produk Terbaru
+          </h3>
+          <div className="gap-6 grid grid-cols-2 lg:grid-cols-5 w-full">
+            {[...Array(5)].map((item, index) => (
+              <div key={index} className="bg-white rounded-2xl">
+                <Image
+                  src="/images/placeholder-image.svg"
+                  alt="Product 1"
+                  width={0}
+                  height={0}
+                  className="rounded-t-xl w-full h-auto"
+                />
+                <div className="flex flex-col p-3">
+                  <p className="font-bold text-neutral-600">Product x</p>
+                  <p className="text-neutral-400 text-sm">$10.00</p>
+                  <Button
+                    color="primary"
+                    isIconOnly
+                    className="ml-auto"
+                    radius="full"
+                  >
+                    <ShoppingCart weight="bold" size={16} />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="gap-6 grid grid-cols-1 lg:grid-cols-3 w-full">
+          {[...Array(3)].map((item, index) => (
+            <Link
+              key={index}
+              href={"#"}
+              className="flex bg-white hover:bg-white/80 hover:shadow-md p-4 rounded-2xl h-36 duration-300"
+            >
+              <p className="m-auto font-bold text-2xl text-center text-neutral-600">
+                Category x
+              </p>
+            </Link>
+          ))}
+        </div>
+        <div className="flex flex-col gap-2 w-full">
+          <h3 className="font-bold text-2xl text-neutral-700">
+            Produk Terlaris
+          </h3>
+          <div className="gap-6 grid grid-cols-2 lg:grid-cols-5 w-full">
+            {[...Array(5)].map((item, index) => (
+              <div key={index} className="bg-white rounded-2xl">
+                <Image
+                  src="/images/placeholder-image.svg"
+                  alt="Product 1"
+                  width={0}
+                  height={0}
+                  className="rounded-t-xl w-full h-auto"
+                />
+                <div className="flex flex-col p-3">
+                  <p className="font-bold text-neutral-600">Product x</p>
+                  <p className="text-neutral-400 text-sm">$10.00</p>
+                  <Button
+                    color="primary"
+                    isIconOnly
+                    className="ml-auto"
+                    radius="full"
+                  >
+                    <ShoppingCart weight="bold" size={16} />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </main>
   );
