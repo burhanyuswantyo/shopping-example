@@ -11,15 +11,28 @@
   "dependencies": {
     "@nextui-org/badge": "^2.0.31",
     "@nextui-org/button": "^2.0.37",
+    "@nextui-org/checkbox": "^2.1.4",
+    "@nextui-org/chip": "^2.0.32",
+    "@nextui-org/divider": "^2.0.31",
     "@nextui-org/dropdown": "^2.1.29",
+    "@nextui-org/image": "^2.0.31",
     "@nextui-org/input": "^2.2.4",
+    "@nextui-org/pagination": "^2.0.35",
+    "@nextui-org/radio": "^2.1.4",
+    "@nextui-org/select": "^2.2.5",
+    "@nextui-org/skeleton": "^2.0.31",
+    "@nextui-org/spinner": "^2.0.33",
     "@nextui-org/system": "^2.2.5",
+    "@nextui-org/table": "^2.0.39",
     "@nextui-org/theme": "^2.2.9",
     "@phosphor-icons/react": "^2.1.7",
+    "axios": "^1.7.4",
     "framer-motion": "^11.3.24",
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
+    "use-debounce": "^10.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -28,6 +41,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
